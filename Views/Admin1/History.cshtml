@@ -1,0 +1,63 @@
+﻿@model ProjectN.ViewModel.AdminViewModel
+
+@{
+    ViewBag.Title = "History";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>History</h2>
+
+<!DOCTYPE html>
+<script src="~/Scripts/jquery-3.2.1.js"></script>
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Enter</title>
+
+</head>
+
+<body>
+
+    @using (Html.BeginForm("history", "Admin", FormMethod.Post))
+    {<table>
+        <tr>
+            <td>ID:</td>
+            <td>@Html.TextBoxFor(m => m.purchase.ID)  @Html.ValidationMessageFor(x => x.purchase.ID)</td>
+        </tr>
+        <tr>
+            <td>Name:</td>
+            <td>@Html.TextBoxFor(m => m.purchase.ProductName)  @Html.ValidationMessageFor(x => x.purchase.ProductName)</td>
+        </tr>
+        <tr>
+            <td>Price:</td>
+            <td>@Html.TextBoxFor(m => m.purchase.ProductName)  @Html.ValidationMessageFor(x => x.purchase.ProductName)</td>
+        </tr>
+        <tr>
+            <td>Quantity:</td>
+            <td>@Html.TextBoxFor(m => m.purchase.Quantity)  @Html.ValidationMessageFor(x => x.purchase.Quantity)</td>
+        </tr>
+        <tr>
+            <td>Category:</td>
+            <td>@Html.TextBoxFor(m => m.purchase.Sum)  @Html.ValidationMessageFor(x => x.purchase.Sum)</td>
+        </tr>
+        <tr>
+            <td>Image:</td>
+            <td>@Html.TextBoxFor(m => m.purchase.BuyerID)  @Html.ValidationMessageFor(x => x.purchase.BuyerID)</td>
+        </tr>
+        <tr>
+            <td><input id="Submit" type="submit" value="Add Product" /></td>
+        </tr>
+
+    </table>
+    }
+    <div>
+        @Html.Partial("DisplayProductsGrid", Model)
+
+
+    </div>
+
+
+</body>
+</html>

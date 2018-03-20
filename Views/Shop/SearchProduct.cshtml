@@ -1,0 +1,43 @@
+﻿@model ProjectN.ViewModel.AdminViewModel
+
+@{
+    ViewBag.Title = "SearchProduct";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>SearchProduct</h2>
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Title</title>
+</head>
+<body>
+    <div>
+        <form action="SearchProduct" method="post">
+            <br />
+            Enter  Name to search <input id="Text1" name="Text1" type="text" />
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1" ><span class="glyphicon glyphicon-search"  aria-hidden="true"></span></span>
+                <input id="searchinput" name="nametxt" type="search" class="form-control" placeholder="Any to any product" aria-describedby="basic-addon1" ng-model="SearchTerm">
+                &nbsp;&nbsp;
+                <a href="#" id="searchclear" class="btn btn-danger" ng-click="SearchTerm = ''">Clear</a>
+            </div>
+            <br />
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-download" aria-hidden="true"></span></span>
+                <input id="rangeFrom" name="catalogtxt" type="number" class="form-control" placeholder="Minimum Product Price" aria-describedby="basic-addon1" ng-model="MinPrice" >
+            </div>
+
+
+            <input id="Submit1" type="submit" value="Search Customer" />
+        </form>
+    </div>
+    <br />
+    @Html.Partial("DisplayProductsGrid", Model)
+   
+
+</body>
+</html>

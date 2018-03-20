@@ -1,0 +1,66 @@
+﻿@model ProjectN.ViewModel.ProductViewModel
+@using ProjectN.Models;
+
+<h2>Add_Productsqsq</h2>
+
+@{
+    ViewBag.Title = "Add_Product";
+    //  Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<!DOCTYPE html>
+<script src="~/Scripts/jquery-3.2.1.js"></script>
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Enter</title>
+
+</head>
+
+
+<body>
+
+    @using (Html.BeginForm("Submit", "Admin", FormMethod.Post))
+    {<table>
+        <tr>
+            <td>Catalog Number:</td>
+            <td>@Html.TextBoxFor(m => m.product.CatalogNumber)  @Html.ValidationMessageFor(x => x.product.CatalogNumber)</td>
+        </tr>
+        <tr>
+            <td>Name:</td>
+            <td>@Html.TextBoxFor(m => m.product.Name)  @Html.ValidationMessageFor(x => x.product.Name)</td>
+        </tr>
+        <tr>
+            <td>Price:</td>
+            <td>@Html.TextBoxFor(m => m.product.Price)  @Html.ValidationMessageFor(x => x.product.Price)</td>
+        </tr>
+        <tr>
+            <td>Quantity:</td>
+            <td>@Html.TextBoxFor(m => m.product.Quantity)  @Html.ValidationMessageFor(x => x.product.Quantity)</td>
+        </tr>
+        <tr>
+            <td>Category:</td>
+            <td>@Html.TextBoxFor(m => m.product.Category)  @Html.ValidationMessageFor(x => x.product.Category)</td>
+        </tr>
+        <tr>
+            <td>Image:</td>
+            <td>@Html.TextBoxFor(m => m.product.Image)  @Html.ValidationMessageFor(x => x.product.Image)</td>
+        </tr>
+        <tr>
+            <td><input id="Submit" type="submit" value="Add Product" /></td>
+        </tr>
+
+    </table>
+    }
+    <div>
+        @Html.Partial("DisplayProductsGrid", Model)
+
+
+    </div>
+
+
+</body>
+</html>

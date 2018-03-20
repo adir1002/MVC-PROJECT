@@ -1,0 +1,66 @@
+﻿@model ProjectN.ViewModel.PurchaseViewModel
+@using ProjectN.Models;
+
+
+<table>
+        <tr>
+            <td>Purchase ID:</td>
+            <td>Buyer ID:</td>
+            <td>Product Name:</td>
+            <td>Quantity:</td>
+            <td>Sum:</td>
+            <td>Date:</td>
+
+        </tr>
+        @*@foreach (Purchase obj in Model.Purchases)
+        {
+            <tr>
+                <td>@obj.ID</td>
+                <td>@obj.BuyerID</td>
+                <td>@obj.ProductName</td>
+                <td>@obj.Quantity</td>
+                <td>@obj.Sum</td>
+                <td>@obj.Date</td>
+            </tr>
+        }*@
+    </table>
+
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Catalog Number</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Image</th>
+        </tr>
+    </thead>
+    <tbody ng-if='Shop.Category != "All"'>
+        <tr ng-repeat="prod in Products" ng-if="(MaxPrice == '' || MaxPrice == null || MaxPriceCheck(MaxPrice,prod.Price)) && (MinPrice == '' || MinPrice == null || MinPriceCheck(MinPrice,prod.Price)) && (Shop.Category == prod.Category) && ((SearchTerm == '') || (SearchProduct(prod.Name,SearchTerm)))">
+            <td style="width:15%">{{prod.CatalogNumber}}</td>
+            <td>{{prod.Name}}</td>
+            <td>₪ {{prod.Price | number}}</td>
+            <td>{{prod.Quantity}}</td>
+            <td>
+                <a href="#" id="pop">
+                    <img id="imageresource" src="{{prod.Image}}" class="effectfront" style="height: 50px;" alt="Click To Enlarge">
+                </a>
+            </td>
+            <td><a href="#" class="btn btn-success" role="button" ng-click="BuyItem(prod.Name,prod.Price,prod.Quantity,prod.CatalogNumber)" data-toggle="modal" data-target="#BuyModal">Buy Now!</a></td>
+        </tr>
+    </tbody>
+    <tbody ng-if='Shop.Category == "All"'>
+        <tr ng-repeat="prod in Products" ng-if="(MaxPrice == '' || MaxPrice == null || MaxPriceCheck(MaxPrice,prod.Price)) && (MinPrice == '' || MinPrice == null || MinPriceCheck(MinPrice,prod.Price)) && ((SearchTerm == '') || (SearchProduct(prod.Name,SearchTerm)))">
+            <td style="width:15%">{{prod.CatalogNumber}}</td>
+            <td>{{prod.Name}}</td>
+            <td>₪ {{prod.Price | number}}</td>
+            <td>{{prod.Quantity}}</td>
+            <td>
+                <a href="#" id="pop">
+                    <img id="imageresource" src="{{prod.Image}}" class="effectfront" style="height: 50px;" alt="Click To Enlarge">
+                </a>
+            </td>
+            <td><a href="#" class="btn btn-success" role="button" ng-click="BuyItem(prod.Name,prod.Price,prod.Quantity,prod.CatalogNumber)" data-toggle="modal" data-target="#BuyModal">Buy Now!</a></td>
+        </tr>
+    </tbody>
+</table>

@@ -1,0 +1,74 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="jumbotron">
+    <h1>Welcome to Adir&Dani shop</h1>
+    <p class="lead">כאן תוכלו לקנות מלא דברים לא שימושיים במחירים מופקעים</p>
+    <p><a href='@Url.Action("Shop", "Home")' class="btn btn-primary btn-lg">Start shoping &raquo;</a></p>
+</div>
+<div id="my-carousel" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+        <li data-target="#my-carousel" data-slide-to="0" class="active"></li>
+        <li data-target="#my-carousel" data-slide-to="1"></li>
+        <li data-target="#my-carousel" data-slide-to="2"></li>
+        <li data-target="#my-carousel" data-slide-to="2"></li>
+    </ol>
+    <div class="carousel-inner">
+        <div class="item active">
+            <img alt="First slide" src="~/Images/arsenal_spy.jpg">
+            <div class="carousel-caption">
+                <h3>ציוד מהרמה הגבוהה ביותר</h3>
+                <p>The latest technology by the leading Gaming Laptop companies!</p>
+            </div>
+        </div>
+        <div class="item">
+            <img alt="Second slide" src="~/Images/Carousel/Samsung2.png">
+            <div class="carousel-caption">
+                <h3>Samsung Products</h3>
+                <p><b>Mor</b>Tech is the <i>Exclusive & Official</i> Seller of Samsung Products in Israel.</p>
+            </div>
+        </div>
+        <div class="item">
+            <img alt="Third slide" src="~/Images/Carousel/Headphones2.png">
+            <div class="carousel-caption">
+                <h3>Headphones</h3>
+                <p>Look great while you hear with the best equipment.</p>
+            </div>
+        </div>
+        <div class="item">
+            <img alt="Fourth slide" src="~/Images/Carousel/Consoles2.png">
+            <div class="carousel-caption">
+                <h3>Consoles</h3>
+                <p>Sony Playstation 4, Microsoft Xbox One and other...</p>
+            </div>
+        </div>
+    </div>
+    <a class="left carousel-control" href="#my-carousel" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+    </a>
+    <a class="right carousel-control" href="#my-carousel" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right"></span>
+    </a>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <h2>Getting started</h2>
+        <p>
+            ASP.NET MVC gives you a powerful, patterns-based way to build dynamic websites that
+            enables a clean separation of concerns and gives you full control over markup
+            for enjoyable, agile development.
+        </p>
+        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301865">Learn more &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Get more libraries</h2>
+        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
+        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+    </div>
+    <div class="col-md-4">
+        <h2>Web Hosting</h2>
+        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
+        <p><a class="btn btn-default" href="http://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
+    </div>
+</div>

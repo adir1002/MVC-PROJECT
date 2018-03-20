@@ -1,0 +1,156 @@
+﻿@model ProjectN.ViewModel.AdminViewModel
+@using ProjectN.Models
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Adir&Dani - @ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <script src="~/Scripts/jquery-3.1.2.js"></script>
+    <script src="~/Scripts/angular.js"></script>
+    <script src="~/Scripts/ScriAngular.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script>
+    $(document).ready(function () {
+        $('.dropdown-toggle').dropdown();
+    });
+    </script>
+    <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Fira+Sans' rel='stylesheet' type='text/css'>
+</head>
+<body ng-app="AngularApp">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container" ng-controller="AdminViewModel">
+            <div class="navbar-header">
+                @*<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>*@
+                <a href='@Url.Action("Index", "Home")' class="navbar-brand">
+                    <span class="glyphicon glyphicon-cd" style="font-size:22px"></span> <b>Adir-Dani</b>Tech
+                </a>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href='@Url.Action("Index", "Home")'>
+                            <span class="glyphicon glyphicon-home" style="font-size:14px"></span> Home
+                        </a>
+                    </li>
+                    <li>
+                        <a href='@Url.Action("ShowSearch", "Shop")'>
+                            <span class="glyphicon glyphicon-shopping-cart" style="font-size:14px"></span> Shop
+                        </a>
+                    </li>
+                    <li>
+                        <a href='@Url.Action("About", "Home")'>
+                            <span class="glyphicon glyphicon-question-sign" style="font-size:14px"></span> About
+                        </a>
+                    </li>
+                    <li>
+                        <a href='@Url.Action("Enter", "Admin")'>
+                            <span class="glyphicon glyphicon-cog" style="font-size:14px"></span> Admin Page
+                        </a>
+                    </li>
+                    <li>
+                        @{
+                            string errorMessage;
+
+                            if (TempData.ContainsKey("WrongLogin") && (bool)TempData["WrongLogin"] == true)
+                            {
+                                errorMessage = "Wrong Username or Password, Please try again!   ";
+                            }
+                            else if (this.Request.QueryString["ReturnUrl"] != null)
+                            {
+                                errorMessage = "You are not logged in! Please login and try again.   ";
+                            }
+                            else
+                            {
+                                errorMessage = "";
+                            }
+                        }
+                        <span class="navbar-text" style="color:#E94B44;margin-right:10px">@errorMessage</span>
+                    </li>
+                </ul>
+                <ul class="nav navbar-navright">
+                    <li>
+                        @{
+                            bool authenticated = ((System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated) || Session["CurrentAdmin"] != null;
+
+                            if (authenticated)
+                            {
+                                if (Session["CurrentAdmin"] == null)
+                                {
+                                    Session["CurrentAdmin"] = Customer.getAdminById(HttpContext.Current.User.Identity.Name.ToString());
+                                }
+
+                                <div class="navbar-text">
+                                    @{
+                                        Customer cust = (Customer)Session["CurrentAdmin"];
+                                    }
+                                    <span style="color:#FF9933;font-size:14px" class="glyphicon glyphicon-user"></span> &nbsp;Logged in as <b>@cust.FirstName @cust.LastName</b> <span style="color:#FF9933;font-size:larger">|</span> <a href='@Url.Action("Index", "Admin")'><b><span class="navbar-link">Admin Page</span></b></a> <span style="color:#FF9933;font-size:larger">|</span> <a href='@Url.Action("LogOut", "Home")'><b><span class="navbar-link">Log Out</span></b></a>
+                                </div>
+                                        }
+                                        else
+                                        {
+
+                                            @*<a href='@Url.Action("Login", "Admin")' data-toggle="modal" data-target="#myModal">
+                                                <span class="glyphicon glyphicon-lock" style="font-size:12px"></span> <span style="font-size:14px">Admin Login</span>
+                                            </a>*@
+                                        }
+                        }
+
+                        <!-- Modal -->
+                        <div id="myModal" class="modal fade" role="dialog">
+                            <div class="modal-dialog">
+                                <!-- Modal content-->
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        <h4 class="modal-title">Admin Login</h4>
+                                    </div>
+                                    @using (Html.BeginForm("Authenticate", "Home", new { returnUrl = this.Request.QueryString["ReturnUrl"] }, FormMethod.Post))
+                                    {
+                                        <div class="modal-body">
+                                            <div class="input-group">
+                                                @Html.TextBoxFor(m => m.customer.UserName, new { @class = "form-control", data_ng_model = "Admin.UserName", data_ng_change = "loginWatcher(Admin.UserName,Admin.Password)", placeholder = "Username" })
+                                            </div>
+                                            <br />
+                                            <div class="input-group">
+                                                @Html.PasswordFor(m => m.customer.Password, new { @class = "form-control", data_ng_model = "Admin.Password", data_ng_change = "loginWatcher(Admin.UserName,Admin.Password)", placeholder = "Password" })
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <input id="Submit" name="Submit" class="btn btn-success" type="submit" value="Login" ng-disabled="Disable" />
+                                            &nbsp;&nbsp;
+                                            <a href="#" class="btn btn-danger" role="button" ng-click="Clear();Disable = true">Clear</a>
+                                            &nbsp;&nbsp;
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        <div>
+            @RenderBody()
+        </div>
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - <b>Adir&Dani</b> Ltd.</p>
+        </footer>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>

@@ -1,0 +1,393 @@
+﻿@model ProjectN.ViewModel.AdminViewModel
+
+@{
+    ViewBag.Title = "Indeqq";
+}
+
+<!DOCTYPE html>
+<script src="~/Scripts/jquery-3.2.1.js"></script>
+<script src="~/Scripts/jquery.validate.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <div> 
+    </div>
+</body>
+</html>
+
+
+<div ng-controller="AdminViewModel">
+    <h2>
+        Admin Page
+        <span ng-if="CurrentCategory != null">
+            - {{CurrentCategory}}
+        </span>
+    </h2>
+    <br />
+    <div class="btn-group" role="group" aria-label="...">
+        <button type="button" class="btn btn-default" ng-click="ChangeCategory('New Product')">New Product</button>
+        <button type="button" class="btn btn-default" ng-click="ChangeCategory('Stock')">View Stock</button>
+        <button type="button" class="btn btn-default" ng-click="ChangeCategory('Purchases')">Purchases History</button>
+        <button type="button" class="btn btn-default" ng-click="ChangeCategory('Admins')">Admins</button>
+        <br /><br /><br />
+        <!-- Different pages shown by what's inside CurrentCategory -->
+        <!-- New Product -->
+        <div ng-if="CurrentCategory == 'New Product'">
+            <script>
+                $(document).ready(function () {
+                    $('.dropdown-toggle').dropdown();
+                });
+            </script>
+        @using (Html.BeginForm("Submit", "Admin", FormMethod.Post))
+        {
+            <table>
+                <tr>
+                    <td>Catalog Number:</td>
+                    <td>@Html.TextBoxFor(m => m.product.CatalogNumber)  @Html.ValidationMessageFor(x => x.product.CatalogNumber)</td>
+                </tr>
+                <tr>
+                    <td>Name:</td>
+                    <td>@Html.TextBoxFor(m => m.product.Name)  @Html.ValidationMessageFor(x => x.product.Name)</td>
+                </tr>
+                <tr>
+                    <td>Price:</td>
+                    <td>@Html.TextBoxFor(m => m.product.Price)  @Html.ValidationMessageFor(x => x.product.Price)</td>
+                </tr>
+                <tr>
+                    <td>Quantity:</td>
+                    <td>@Html.TextBoxFor(m => m.product.Quantity)  @Html.ValidationMessageFor(x => x.product.Quantity)</td>
+                </tr>
+                <tr>
+                    <td>Category:</td>
+                    <td>@Html.TextBoxFor(m => m.product.Category)  @Html.ValidationMessageFor(x => x.product.Category)</td>
+                </tr>
+                <tr>
+                    <td>Image:</td>
+                    <td>@Html.TextBoxFor(m => m.product.Image)  @Html.ValidationMessageFor(x => x.product.Image)</td>
+                </tr>
+                <tr>
+                    <td><b>Image (URL):</b></td>
+                    <td>
+                        <div class="input-group">
+                            <input type="text" name="product.Image" class="form-control" id="image-url" aria-describedby="basic-addon3" style="width:400px" ng-model="Shop.Image" placeholder="Enter the URL for your Image here" ng-init="Shop.Image = ''">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>Image Preview:</b></td>
+                    <td ng-if="Shop.Image == ''">
+                        <img src="http://www.aviatorcameragear.com/wp-content/uploads/2012/07/placeholder_2.jpg" class="img-thumbnail" style="height:200px" />
+                    </td>
+                    <td ng-if="Shop.Image != ''">
+                        <img ng-src={{Shop.Image}} err-SRC="http://prajwaldesai.com/wp-content/uploads/2014/01/error-code.jpeg" class="img-thumbnail" style="height:200px" />
+                    </td>
+                </tr>
+                <tr>
+                    <td><input id="Submit" type="submit" value="Add Product" /></td>
+                </tr>
+                <tr>
+                </tr>
+            </table>
+            @Html.Partial("DisplayProductsGrid", Model)
+
+        }
+
+</div>
+        <!-- View Stock -->
+        <div ng-if="CurrentCategory == 'View Stock'" @*ng-controller="ShopViewModel"*@>
+            @*<script>
+                $(document).ready(function () {
+                    $('.dropdown-toggle').dropdown();
+                });
+            </script>*@
+            @*@using (Html.BeginForm("Submit", "Admin", FormMethod.Post))
+            {*@
+                <table>
+                    <tr>
+                        <td>Catalog Number:</td>
+                        <td>@Html.TextBoxFor(m => m.product.CatalogNumber)  @Html.ValidationMessageFor(x => x.product.CatalogNumber)</td>
+                    </tr>
+                    <tr>
+                        <td>Name:</td>
+                        <td>@Html.TextBoxFor(m => m.product.Name)  @Html.ValidationMessageFor(x => x.product.Name)</td>
+                    </tr>
+                    <tr>
+                        <td>Price:</td>
+                        <td>@Html.TextBoxFor(m => m.product.Price)  @Html.ValidationMessageFor(x => x.product.Price)</td>
+                    </tr>
+                    <tr>
+                        <td>Quantity:</td>
+                        <td>@Html.TextBoxFor(m => m.product.Quantity)  @Html.ValidationMessageFor(x => x.product.Quantity)</td>
+                    </tr>
+                    <tr>
+                        <td>Category:</td>
+                        <td>@Html.TextBoxFor(m => m.product.Category)  @Html.ValidationMessageFor(x => x.product.Category)</td>
+                    </tr>
+                    <tr>
+                        <td>Image:</td>
+                        <td>@Html.TextBoxFor(m => m.product.Image)  @Html.ValidationMessageFor(x => x.product.Image)</td>
+                    </tr>
+                    <tr>
+                        <td><b>Image (URL):</b></td>
+                        <td>
+                            <div class="input-group">
+                                <input type="text" name="product.Image" class="form-control" id="image-url" aria-describedby="basic-addon3" style="width:400px" ng-model="Shop.Image" placeholder="Enter the URL for your Image here" ng-init="Shop.Image = ''">
+                            </div>
+                        </td>
+                    </tr>
+
+                </table>
+                @Html.Partial("DisplayProductsGrid", Model)
+
+            
+            @*@{Html.Partial("DisplayProductsGrid", Model)}*@
+
+
+        <!-- Purchases History -->
+        <div ng-if="CurrentCategory == 'Purchases History'" ng-controller="ShopViewModel">
+            <script>
+                $(document).ready(function () {
+                    $('.dropdown-toggle').dropdown();
+                });
+            </script>
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></span>
+                <input id="searchinput" type="search" class="form-control" placeholder="Start typing Product/Buyer Name to Search..." aria-describedby="basic-addon1" ng-model="SearchTerm">
+                &nbsp;&nbsp;
+                <a href="#" id="searchclear" class="btn btn-danger" ng-click="SearchTerm = ''">Clear</a>
+            </div>
+            <script>
+                $(document).ready(function () {
+                    $('#searchinput').keyup(function () {
+                        $('#searchclear').toggle(Boolean($(this).val()));
+                    });
+                    $('#searchclear').toggle(Boolean($("#searchinput").val()));
+                    $('#searchclear').click(function () {
+                        $('#searchinput').val('').focus();
+                        $(this).hide();
+                    });
+                });
+            </script>
+            <br /><br />
+            <table class="table table-condensed">
+                <thead>
+                    <tr>
+                        <th>Purchase ID</th>
+                        <th>Product Name</th>
+                        <th>Pieces Sold</th>
+                        <th>Income from Purchase</th>
+                        <th>Buyer Name</th>
+                        <th>Date of Purchase</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="purch in Purchases" ng-if="(SearchTerm == '') || (SearchProduct(purch.ProductName,SearchTerm)) || (SearchProduct(purch.BuyerName,SearchTerm))">
+                        <td style="width:15%">{{purch.Id}}</td>
+                        <td>{{purch.ProductName}}</td>
+                        <td>{{purch.Quantity | number}}</td>
+                        <td>₪ {{purch.Sum | number}}</td>
+                        <td>{{purch.BuyerName}}</td>
+                        <td>{{purch.Date | date:'dd/MM/yyyy HH:mm'}}</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th>{{TotalSold() | number}}</th>
+                        <th>₪ {{TotalIncome() | number}}</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </tfoot>
+            </table>
+            <!-- Quantity Modal -->
+            <div class="modal fade" id="QuantityModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Change Quantity for {{ Shop.Name }} ({{Shop.CatalogNumber}})</h4>
+                        </div>
+                        <div class="modal-body" style="text-align:center">
+                            Quantity:
+                            <div class="input-group">
+                                <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span></span>
+                                <input type="number" class="form-control" placeholder="Enter Product's Quantity'" aria-describedby="basic-addon1" ng-model="Shop.Quantity">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="UpdateProductQuantity()">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Delete Modal -->
+            <div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Delete {{ Shop.Name }} ({{Shop.CatalogNumber}})</h4>
+                            <span class="small">(<b>{{ Shop.Quantity}}</b> Pieces left in Stock)</span>
+                        </div>
+                        <div class="modal-body">
+                            You are about to delete this product,
+                            <br />
+                            this procedure is irreversible.
+                            <br /><br />
+                            <b>Do you wish to proceed?</b>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="DeleteProduct()">Delete Product</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Admin List -->
+        <div ng-if="CurrentCategory == 'Admin List'">
+            <script>
+                $(document).ready(function () {
+                    $('.dropdown-toggle').dropdown();
+                });
+            </script>
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></span>
+                <input id="searchinput" type="search" class="form-control" placeholder="Start typing to Search..." aria-describedby="basic-addon1" ng-model="SearchTerm">
+                &nbsp;&nbsp;
+                <a href="#" id="searchclear" class="btn btn-danger" ng-click="SearchTerm = ''">Clear</a>
+            </div>
+
+            <script>
+                $(document).ready(function () {
+                    $('#searchinput').keyup(function () {
+                        $('#searchclear').toggle(Boolean($(this).val()));
+                    });
+                    $('#searchclear').toggle(Boolean($("#searchinput").val()));
+                    $('#searchclear').click(function () {
+                        $('#searchinput').val('').focus();
+                        $(this).hide();
+                    });
+                });
+            </script>
+            <br /><br />
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Admin ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Username</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="admn in Admins">
+                        <td style="width:15%">{{admn.Id}}</td>
+                        <td>{{admn.FirstName}}</td>
+                        <td>{{admn.LastName}}</td>
+                        <td>{{admn.UserName}}</td>
+                        <td><a href="#" ng-click="EditAdmin(admn.Id,admn.FirstName,admn.LastName,admn.UserName,admn.Password)" class="btn-sm btn-primary" role="button" data-toggle="modal" data-target="#EditModal">Edit Admin</a></td>
+                        <td><a href="#" ng-click="EditAdmin(admn.Id,admn.FirstName,admn.LastName,admn.UserName,admn.Password)" class="btn-sm btn-danger" role="button" data-toggle="modal" data-target="#DeleteModal">Delete Admin</a></td>
+                    </tr>
+                </tbody>
+            </table>
+            <br /><br />
+            <center><a href="#" class="btn-lg btn-primary" role="button" data-toggle="modal" data-target="#AddModal">Create a New Admin</a></center>
+            <br /><br />
+            <!-- Add Modal -->
+            <div class="modal fade" id="AddModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Create an Admin</h4>
+                        </div>
+                        <div class="modal-body">
+                            ID: <input type="text" class="form-control" placeholder="Admin ID" aria-describedby="basic-addon1" ng-model="Admin.Id">
+                            <span class="text-info" style="font-size:small">9 Digits.</span>
+                            <br /><br />
+                            First Name: <input type="text" class="form-control" placeholder="Admin First Name" aria-describedby="basic-addon1" ng-model="Admin.FirstName">
+                            <span class="text-info" style="font-size:small">2-15 Letters, Must begin with a Capital Letter.</span>
+                            <br /><br />
+                            Last Name: <input type="text" class="form-control" placeholder="Start with a Capital Letter" aria-describedby="basic-addon1" ng-model="Admin.LastName">
+                            <span class="text-info" style="font-size:small">2-15 Letters, Must begin with a Capital Letter.</span>
+                            <br /><br />
+                            Username: <input type="text" class="form-control" placeholder="Admin Username" aria-describedby="basic-addon1" ng-model="Admin.UserName">
+                            <span class="text-info" style="font-size:small">Letters & Digits Only.</span>
+                            <br /><br />
+                            Password: <input type="password" class="form-control" placeholder="" aria-describedby="basic-addon1" ng-model="Admin.Password">
+                            <span class="text-info" style="font-size:small">Password must contain at least: 1 Upper Case Letter, 1 Lower Case Letter, 1 Digit, 1 Special Character.</span>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="AddAdmin()">Add</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Edit Modal -->
+            <div class="modal fade" id="EditModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Edit an Admin</h4>
+                        </div>
+                        <div class="modal-body">
+                            ID: <input type="text" class="form-control" placeholder="Admin ID" aria-describedby="basic-addon1" ng-model="Admin.Id">
+                            <span class="text-info" style="font-size:small">9 Digits.</span>
+                            <br /><br />
+                            First Name: <input type="text" class="form-control" placeholder="Admin First Name" aria-describedby="basic-addon1" ng-model="Admin.FirstName">
+                            <span class="text-info" style="font-size:small">2-15 Letters, Must begin with a Capital Letter.</span>
+                            <br /><br />
+                            Last Name: <input type="text" class="form-control" placeholder="Start with a Capital Letter" aria-describedby="basic-addon1" ng-model="Admin.LastName">
+                            <span class="text-info" style="font-size:small">2-15 Letters, Must begin with a Capital Letter.</span>
+                            <br /><br />
+                            Username: <input type="text" class="form-control" placeholder="Admin Username" aria-describedby="basic-addon1" ng-model="Admin.UserName">
+                            <span class="text-info" style="font-size:small">Letters & Digits Only.</span>
+                            <br /><br />
+                            Password: <input type="text" class="form-control" placeholder="" aria-describedby="basic-addon1" ng-model="Admin.Password">
+                            <span class="text-info" style="font-size:small">Password must contain at least: 1 Upper Case Letter, 1 Lower Case Letter, 1 Digit, 1 Special Character.</span>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-success" data-dismiss="modal" ng-click="SaveAdmin()">Save Changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Delete Modal -->
+            <div class="modal fade" id="DeleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="myModalLabel">Delete {{Admin.UserName}}</h4>
+                            <span class="small">(<b>{{ Admin.FirstName }} {{Admin.LastName}}</b>)</span>
+                        </div>
+                        <div class="modal-body">
+                            You are about to delete this Admin,
+                            <br />
+                            this procedure is irreversible.
+                            <br /><br />
+                            <b>Do you wish to proceed?</b>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="DeleteAdmin()">Delete Admin</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    </div>
+            { }

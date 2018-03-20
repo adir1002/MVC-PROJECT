@@ -1,0 +1,13 @@
+﻿@model ProjectN.ViewModel.AdminViewModel
+
+<h2>DisplayProducts</h2>
+
+<span style="color:blue"></span>
+<br />
+
+
+@{
+    WebGrid obj = new WebGrid(Model.purchases, canSort: false, canPage: true, rowsPerPage: 10, ajaxUpdateContainerId: "tblGrid");
+}
+
+@obj.GetHtml()
